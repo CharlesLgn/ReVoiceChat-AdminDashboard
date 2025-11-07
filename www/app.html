@@ -71,7 +71,10 @@
                 </div>
 
                 <!-- Emotes -->
-                <div class="hidden" id="server-setting-content-emotes"></div>
+                <div class="hidden" id="server-setting-content-emotes">
+                    <h1>Emotes</h1>
+                    <revoice-emoji-manager path="application" id="setting-emotes-form"></revoice-emoji-manager>
+                </div>
 
                 <!-- Members -->
                 <div class="hidden" id="server-setting-content-members">
@@ -95,6 +98,7 @@
 
     <!-- Components -->
     <script src="src/js/component/icon.component.js"></script>
+    <script src="src/js/component/emoji.manager.component.js"></script>
 
     <!-- App -->
     <script src="src/js/app.js" type="module"></script>
