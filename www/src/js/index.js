@@ -26,7 +26,7 @@ function userLogin() {
     // Validate URL
     try {
         const inputHost = new URL(FORM.host.value);
-        login(LOGIN, tauriActive ? inputHost.href : inputHost.origin);
+        login(LOGIN, inputHost.origin);
     }
     catch (e) {
         Swal.fire({
@@ -67,6 +67,7 @@ async function login(loginData, host) {
         document.location.href = `app.html`;
     }
     catch (error) {
+        console.log(error);
         Swal.fire({
             icon: "error",
             title: `Unable to connect to\n ${host}`,
