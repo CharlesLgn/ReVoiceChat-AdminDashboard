@@ -1,4 +1,5 @@
 import Fetcher from "./fetcher.js";
+import {InvitationSettings} from "./serverSettingsController.js";
 
 export default class ReVoiceChatAdmin {
     #currentTab;
@@ -23,6 +24,8 @@ export default class ReVoiceChatAdmin {
         }
 
         this.fetcher = new Fetcher(this.#token, this.coreUrl, this.mediaUrl);
+        this.invitationSettings = new InvitationSettings(this)
+        document.addEventListener('DOMContentLoaded', () => this.#load());
     }
 
     // Token
@@ -47,4 +50,10 @@ export default class ReVoiceChatAdmin {
             document.getElementById(`server-setting-tab-${param}`).addEventListener('click', () => this.#select(param));
         }
     }
+    #load() {
+        this.invitationSettings.invitationLoad()
+            .then(() => this.invitationSettings.invitationEventHandler())
+    }
 }
+
+window.RVCA = new ReVoiceChatAdmin();

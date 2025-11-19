@@ -2,104 +2,106 @@
 <html lang="en" data-theme="default">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="robots" content="noindex" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="robots" content="noindex"/>
 
-    <link href="src/css/themes.css" rel="stylesheet" />
-    <link href="src/css/main.css" rel="stylesheet" />
-    <link rel="shortcut icon" type="image/png" href="src/img/favicon.png" />
+    <link href="src/css/themes.css" rel="stylesheet"/>
+    <link href="src/css/main.css" rel="stylesheet"/>
+    <link rel="shortcut icon" type="image/png" href="src/img/favicon.png"/>
     <title>ReVoiceChat - AdminDashboard</title>
 </head>
 
 <body>
-    <!-- Config Containter -->
-  <div class="menu">
+<!-- Config Containter -->
+<div class="menu">
     <div class="menu-list">
-      <div>
-        <button class="sub-category" id="server-setting-tab-overview">
-          <revoice-icon-information></revoice-icon-information> Overview
-        </button>
-      </div>
-      <div>
-        <button class="sub-category" id="server-setting-tab-members">
-          <revoice-icon-users></revoice-icon-users> Members
-        </button>
-      </div>
+        <div>
+            <button class="sub-category" id="server-setting-tab-overview">
+                <revoice-icon-information></revoice-icon-information>
+                Overview
+            </button>
+        </div>
+        <div>
+            <button class="sub-category" id="server-setting-tab-members">
+                <revoice-icon-users></revoice-icon-users>
+                Members
+            </button>
+        </div>
     </div>
     <div>
-      <button class="sub-category danger" id="user-setting-tab-logout">
-        <revoice-icon-logout></revoice-icon-logout>
-        Logout
-      </button>
+        <button class="sub-category danger" id="user-setting-tab-logout">
+            <revoice-icon-logout></revoice-icon-logout>
+            Logout
+        </button>
     </div>
-  </div>
-    <div class="main config" id="route-config">
-        <div class="config-container-right">
-            <div>
-                <br />
-                <h1>Admin dashboard</h1>
-                <!-- Overview -->
-                <div class="hidden" id="server-setting-content-overview">
-                    <div class="side-overview-dashboard">
-                        <div class="overview-dashboard vertical">
-                          <div class="card" id="server-setting-content-servers">
-                          <h2>Servers</h2>
-
+</div>
+<div class="main config" id="route-config">
+    <div class="config-container-right">
+        <div>
+            <br/>
+            <h1>Admin dashboard</h1>
+            <!-- Overview -->
+            <div class="hidden" id="server-setting-content-overview">
+                <div class="side-overview-dashboard">
+                    <div class="overview-dashboard vertical">
+                        <div class="card" id="server-setting-content-servers">
+                            <h2>Servers</h2>
+                            <div id="overview-server-list"></div>
                         </div>
 
                         <div class="card" id="server-setting-content-technical-parameters">
-                          <h2>Technical parameters</h2>
-
+                            <h2>Technical parameters</h2>
+                            <div id="overview-technical-list"></div>
                         </div>
-                      </div>
+                    </div>
 
-                      <div class="overview-dashboard vertical">
+                    <div class="overview-dashboard vertical">
                         <div class="card vertical" id="server-setting-content-emotes">
-                          <h2>Emotes</h2>
-                          <revoice-emoji-manager path="global" id="setting-emotes-form"></revoice-emoji-manager>
+                            <h2>Emotes</h2>
+                            <revoice-emoji-manager path="global" id="setting-emotes-form"></revoice-emoji-manager>
                         </div>
-                      </div>
                     </div>
                 </div>
+            </div>
 
-              <div class="hidden" id="server-setting-content-members">
+            <div class="hidden" id="server-setting-content-members">
                 <div class="side-overview-dashboard">
-                  <div class="overview-dashboard vertical">
-                    <div class="card" id="server-setting-content-users">
-                      <h2>Users</h2>
-                      <div id="server-setting-users" class="config-members-list"></div>
-                    </div>
+                    <div class="overview-dashboard vertical">
+                        <div class="card" id="server-setting-content-users">
+                            <h2>Users</h2>
+                            <div id="server-setting-users" class="config-members-list"></div>
+                        </div>
 
-                    <div class="card" id="server-setting-content-admins">
-                      <h2>Admins</h2>
-                      <div id="server-setting-admins" class="config-members-list"></div>
+                        <div class="card" id="server-setting-content-admins">
+                            <h2>Admins</h2>
+                            <div id="server-setting-admins" class="config-members-list"></div>
+                        </div>
                     </div>
-                  </div>
-                  <div class="overview-dashboard vertical">
-                    <div class="card vertical" id="server-setting-content-invitations">
-                      <h2>Invitations</h2>
-                      <button id='server-setting-invitation-create'>New invitation</button>
-                      <br /><br />
-                      <div id="server-setting-invitation" class="config-invitation-list"></div>
+                    <div class="overview-dashboard vertical">
+                        <div class="card vertical" id="server-setting-content-invitations">
+                            <h2>Invitations</h2>
+                            <button id='server-setting-invitation-create'>New invitation</button>
+                            <br/><br/>
+                            <div id="server-setting-invitation" class="config-invitation-list"></div>
+                        </div>
                     </div>
-                  </div>
                 </div>
-              </div>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Libraries -->
-    <script src="src/js/lib/sweetalert2.min.js"></script>
-    <script src="src/js/lib/tools.js"></script>
+<!-- Libraries -->
+<script src="src/js/lib/sweetalert2.min.js"></script>
+<script src="src/js/lib/tools.js"></script>
 
-    <!-- Components -->
-    <script src="src/js/component/icon.component.js"></script>
-    <script src="src/js/component/emoji.manager.component.js"></script>
+<!-- Components -->
+<script src="src/js/component/icon.component.js"></script>
+<script src="src/js/component/emoji.manager.component.js"></script>
 
-    <!-- App -->
-    <script src="src/js/app.js" type="module"></script>
+<!-- App -->
+<script src="src/js/app/revoicechatadmin.js" type="module"></script>
 </body>
 
 </html>

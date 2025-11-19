@@ -116,6 +116,14 @@ input:where([type=submit]) {
     background-image: none
 }
 
+.config button {
+    background-color: var(--pri-button-bg-color);
+}
+
+.config button[disabled], .config button:hover {
+    background-color: var(--pri-button-hover-color);
+}
+
 :-moz-focusring {
     outline: auto
 }
@@ -637,14 +645,14 @@ textarea.config-item {
 
 .config-item .context-menu {
     visibility: hidden;
-    margin-right: 0;
-    margin-left: auto;
-    padding-top: 0.25rem;
+    display: none;
+    align-items: center;
 }
 
 .config-item .context-menu:hover,
 .config-item:hover .context-menu {
     visibility: visible;
+    display: flex;
 }
 
 .config-item .context-menu .icon {
@@ -668,6 +676,8 @@ textarea.config-item {
 .config-item .invitation {
     user-select: text;
     cursor: default;
+    text-wrap-mode: nowrap;
+    overflow: hidden;
 }
 
 .swal-input {
@@ -815,6 +825,13 @@ input[type=file]::file-selector-button {
 
 .cross-line:nth-child(2) {
     animation-delay: 0.15s;
+}
+
+.invitation.config-item {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .overlay {

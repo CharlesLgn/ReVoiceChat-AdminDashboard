@@ -47,6 +47,31 @@ function eraseCookie(name) {
 }
 
 /**
+ * Copy data to user clipboard
+ * When available it use the newest API clipboard.writeText()
+ * @param data Data to copy to user clipboard
+ */
+async function copyToClipboard(data) {
+    try {
+        if (navigator.clipboard) {
+            await navigator.clipboard.writeText(data);
+        }
+        else {
+            // Fallback
+            const input = document.createElement('input');
+            input.id = 'input-copy'
+            input.value = data;
+            document.body.appendChild(input);
+            document.getElementById('input-copy').select();
+            document.execCommand("copy");
+            input.remove();
+        }
+    } catch (err) {
+        console.error('copyToClipboard: Failed to copy:', err);
+    }
+}
+
+/**
  * Fetch wrapper for Tauri
  * @param url
  * @param options
