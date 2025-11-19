@@ -5,7 +5,12 @@ const SwalCustomClass = {
     confirmButton: "swalConfirm",
 }
 
-// Save a cookie
+/**
+ * Set a cookie to browser / tauri
+ * @param name Name of cookie
+ * @param value Data of cookie
+ * @param days Expiration (in days)
+ */
 function setCookie(name, value, days) {
     let expires = "";
     if (days) {
@@ -16,24 +21,37 @@ function setCookie(name, value, days) {
     document.cookie = name + "=" + encodeURIComponent(value) + expires + "; path=/; SameSite=Strict";
 }
 
-// Read a cookie
+/**
+ * Get a cookie from browser / tauri
+ * @param name Name of cookie to read/get
+ * @returns Data of cookie
+ */
 function getCookie(name) {
-    const stored = localStorage.getItem(`secure_${name}`);
-    if (!stored) return null;
-    try {
-        const data = JSON.parse(stored);
-        if (data.expires && Date.now() > data.expires) {
-            localStorage.removeItem(`secure_${name}`);
-            return null;
+    const nameEQ = name + "=";
+    const cookies = document.cookie.split(';');
+    for (let c of cookies) {
+        let cookie = c.trim();
+        if (cookie.startsWith(nameEQ)) {
+            return decodeURIComponent(cookie.substring(nameEQ.length));
         }
-        return data.value;
-    } catch (e) {
-        console.error('Error parsing stored data:', e);
-        return null;
     }
+    return null;
 }
 
-// Delete a cookie
+/**
+ * Erase a named cookie
+ * @param name Name of the cookie
+ */
 function eraseCookie(name) {
     document.cookie = name + "=; Max-Age=-99999999; path=/";
+}
+
+/**
+ * Fetch wrapper for Tauri
+ * @param url
+ * @param options
+ * @returns function to use
+ */
+async function apiFetch(url, options = {}) {
+    return fetch(url, options);
 }

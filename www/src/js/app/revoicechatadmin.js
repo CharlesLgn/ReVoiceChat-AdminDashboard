@@ -1,9 +1,33 @@
+import Fetcher from "./fetcher.js";
+
 export default class ReVoiceChatAdmin {
     #currentTab;
+    #token
 
     constructor(){
         this.#selectEventHandler()
         this.#select('overview');
+
+        const storedCoreUrl = localStorage.getItem("lastHost");
+        if (!storedCoreUrl) {
+            document.location.href = `index.html`;
+        }
+        const core = new URL(storedCoreUrl);
+        this.coreUrl = `${core.protocol}//${core.host}`;
+        this.mediaUrl = `${core.protocol}//${core.host}/media`;
+        const storedToken = getCookie("jwtToken");
+        if (storedToken) {
+            this.#token = storedToken;
+        } else {
+            document.location.href = `index.html`;
+        }
+
+        this.fetcher = new Fetcher(this.#token, this.coreUrl, this.mediaUrl);
+    }
+
+    // Token
+    getToken() {
+        return this.#token;
     }
 
     #select(name) {

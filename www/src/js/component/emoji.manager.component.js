@@ -123,7 +123,7 @@ class EmojiManager extends HTMLElement {
             .filter(k => k.length > 0);
 
         try {
-            const emojiData = await RVC.fetcher.fetchCore(`/emote/${this.path}`, 'PUT', {
+            const emojiData = await RVCA.fetcher.fetchCore(`/emote/${this.path}`, 'PUT', {
                     fileName: file.name,
                     content: nameInput.value.trim(),
                     keywords: keywords
@@ -131,11 +131,11 @@ class EmojiManager extends HTMLElement {
             );
             const formData = new FormData();
             formData.append('file', file);
-            await fetch(`${RVC.mediaUrl}/emote/${emojiData.id}`, {
+            await fetch(`${RVCA.mediaUrl}/emote/${emojiData.id}`, {
                 method: "POST",
                 signal: AbortSignal.timeout(5000),
                 headers: {
-                    'Authorization': `Bearer ${RVC.getToken()}`
+                    'Authorization': `Bearer ${RVCA.getToken()}`
                 },
                 body: formData
             });
@@ -186,7 +186,7 @@ class EmojiManager extends HTMLElement {
         }).then(async (result) => {
             if (result.value) {
                 try {
-                    await RVC.fetcher.fetchCore(`/emote/${id}`, 'DELETE');
+                    await RVCA.fetcher.fetchCore(`/emote/${id}`, 'DELETE');
 
                     // Temporary: Delete locally until API is integrated
                     const emoji = this.emojis.find((e) => e.id === id);
@@ -257,7 +257,7 @@ class EmojiManager extends HTMLElement {
                 editEmojiFile.value = '';
 
                 const editPreview = popup.querySelector('#editPreview');
-                editPreview.innerHTML = `<img src="${RVC.mediaUrl}/emote/${id}" alt="${emoji.name}">`;
+                editPreview.innerHTML = `<img src="${RVCA.mediaUrl}/emote/${id}" alt="${emoji.name}">`;
                 editPreview.style.display = 'flex';
 
                 editEmojiFile.addEventListener('change', (e) => {
@@ -301,7 +301,7 @@ class EmojiManager extends HTMLElement {
 
             const updateEmoji = async () => {
                 try {
-                    await RVC.fetcher.fetchCore(`/emote/${this.currentEditId}`, 'PATCH', {
+                    await RVCA.fetcher.fetchCore(`/emote/${this.currentEditId}`, 'PATCH', {
                         fileName: result.file?.name,
                         content: result.name.trim(),
                         keywords: keywords
@@ -314,11 +314,11 @@ class EmojiManager extends HTMLElement {
                     if (result.file) {
                         const formData = new FormData();
                         formData.append('file', result.file);
-                        await fetch(`${RVC.mediaUrl}/emote/${this.currentEditId}`, {
+                        await fetch(`${RVCA.mediaUrl}/emote/${this.currentEditId}`, {
                             method: "POST",
                             signal: AbortSignal.timeout(5000),
                             headers: {
-                                'Authorization': `Bearer ${RVC.getToken()}`
+                                'Authorization': `Bearer ${RVCA.getToken()}`
                             },
                             body: formData
                         });
@@ -374,7 +374,7 @@ class EmojiManager extends HTMLElement {
             <div class="config-item">
                 <div class="emoji-header">
                     <div class="emoji-preview">
-                        <img src="${RVC.mediaUrl}/emote/${emoji.id}" alt="${emoji.name}">
+                        <img src="${RVCA.mediaUrl}/emote/${emoji.id}" alt="${emoji.name}">
                     </div>
                     <div class="emoji-info">
                         <div class="emoji-name">:${emoji.name}:</div>
@@ -405,7 +405,6 @@ class EmojiManager extends HTMLElement {
     render() {
         this.shadowRoot.innerHTML = `
             <link href="src/css/main.css" rel="stylesheet" />
-            <link href="src/css/emoji.css" rel="stylesheet" />
             <style>
                 * {
                     font-family: sans-serif;
