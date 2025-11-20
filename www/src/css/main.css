@@ -614,6 +614,7 @@ form.popup select,
 
 .config-item {
     display: flex;
+    align-items: center;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
     margin-bottom: 0.3rem;
@@ -856,4 +857,46 @@ input[type=file]::file-selector-button {
 .menu .sub-category.danger:hover{
     background-color: darkred;
     color: #ff1f1f;
+}
+
+.card-list {
+    width: -webkit-fill-available;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 5px;
+}
+
+.id-tooltip {
+    font-size: 12px;
+    margin: 5px;
+    padding: 2px 5px 2px 5px;
+    border-radius: 5px;
+    background-color: var(--qua-bg-color);
+    color: var(--pri-placeholder-color);
+    text-wrap: nowrap;
+}
+
+.user-login-tooltip {
+    margin: 5px;
+    padding: 2px 5px 2px 5px;
+    border-radius: 5px;
+    color: var(--pri-placeholder-color);
+    text-wrap: nowrap;
+}
+
+.technical-list {
+    padding: 5px;
+    width: -webkit-fill-available;
+}
+
+.technical-list td {
+    padding: 10px;
+    background-color: var(--ter-bg-color);
+}
+
+.technical-list tr {
+    border: var(--sec-bg-color) 1px solid;
+    border-bottom: var(--sec-bg-color) 10px solid;
+    border-radius: 5px;
 }

@@ -1,7 +1,11 @@
 import Fetcher from "./fetcher.js";
-import {InvitationSettings} from "./serverSettingsController.js";
+import {InvitationSettings} from "./invitation.settings.js";
+import {LogoutComponent} from "./logout.js";
+import {UsersSettings} from "./users.settings.js";
+import {ServersSettings} from "./server.settings.js";
+import {TechnicalParametersSettings} from "./technical.parameters.settings.js";
 
-export default class ReVoiceChatAdmin {
+class ReVoiceChatAdmin {
     #currentTab;
     #token
 
@@ -25,6 +29,10 @@ export default class ReVoiceChatAdmin {
 
         this.fetcher = new Fetcher(this.#token, this.coreUrl, this.mediaUrl);
         this.invitationSettings = new InvitationSettings(this)
+        this.logoutComponent = new LogoutComponent(this)
+        this.usersSettings = new UsersSettings(this)
+        this.serversSettings = new ServersSettings(this)
+        this.technicalParametersSettings = new TechnicalParametersSettings(this)
         document.addEventListener('DOMContentLoaded', () => this.#load());
     }
 
@@ -50,9 +58,13 @@ export default class ReVoiceChatAdmin {
             document.getElementById(`server-setting-tab-${param}`).addEventListener('click', () => this.#select(param));
         }
     }
+
     #load() {
-        this.invitationSettings.invitationLoad()
-            .then(() => this.invitationSettings.invitationEventHandler())
+        this.invitationSettings.load();
+        this.logoutComponent.load();
+        this.usersSettings.load();
+        this.serversSettings.load();
+        this.technicalParametersSettings.load();
     }
 }
 

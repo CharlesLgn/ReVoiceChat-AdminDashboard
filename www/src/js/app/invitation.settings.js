@@ -3,11 +3,15 @@ export class InvitationSettings {
         this.RVCA = RVCA
     }
 
-    invitationEventHandler() {
+    load() {
+        this.#invitationLoad().then(() => this.#invitationEventHandler())
+    }
+
+    #invitationEventHandler() {
         document.getElementById('server-setting-invitation-create').addEventListener('click', () => this.#invitationCreate());
     }
 
-    async invitationLoad() {
+    async #invitationLoad() {
         const result = await this.RVCA.fetcher.fetchCore(`/invitation/application`);
         if (result) {
             const list = document.getElementById("server-setting-invitation");
@@ -24,7 +28,7 @@ export class InvitationSettings {
     async #invitationCreate() {
         const result = await this.RVCA.fetcher.fetchCore(`/invitation/application`, 'POST');
         if (result.status === "CREATED") {
-            await this.invitationLoad();
+            await this.#invitationLoad();
             Swal.fire({
                 title: `New invitation`,
                 html: `<input class='swal-input' type='text' value='${result.id}' readonly>`,
@@ -75,7 +79,7 @@ export class InvitationSettings {
         }).then(async (result) => {
             if (result.value) {
                 await this.RVCA.fetcher.fetchCore(`/invitation/${data.id}`, 'DELETE');
-                await this.invitationLoad();
+                await this.#invitationLoad();
             }
         });
     }
