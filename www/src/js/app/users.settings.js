@@ -17,17 +17,28 @@ export class UsersSettings {
     for (const user of users) {
       const DIV = document.createElement('div');
       DIV.id = user.id;
-      DIV.className = "user config-item";
-      DIV.appendChild(this.#buildProfilPictureElement(`${this.RVCA.mediaUrl}/profiles/${user.id}`))
+      if (user.type === "BOT") {
+        const icon = document.createElement('span')
+        icon.className = "user-icon"
+        icon.innerHTML = `<revoice-icon-robot></revoice-icon-robot>`
+        DIV.appendChild(icon);
+      }
+      DIV.appendChild(this.#buildProfilPictureElement(user))
       DIV.appendChild(this.#buildUserInfos(user))
+      if (user.id === RVCA.user.id) {
+        DIV.className = "user config-item you";
+      } else {
+        DIV.addEventListener('click', () => this.#update(user))
+        DIV.className = "user config-item";
+      }
       usersNode.appendChild(DIV)
     }
   }
 
-  #buildProfilPictureElement(profilePicture) {
+  #buildProfilPictureElement(user) {
     const profilPicture = document.createElement('img');
     profilPicture.id = "user-picture-${user.id}"
-    profilPicture.src = profilePicture
+    profilPicture.src = `${this.RVCA.mediaUrl}/profiles/${user.id}`
     profilPicture.alt = "PFP"
     profilPicture.className = "icon ring-2"
     return profilPicture;
@@ -53,7 +64,7 @@ export class UsersSettings {
 
   #idTooltip(user) {
     const userId = document.createElement('span');
-    userId.className = "user-id-tooltip"
+    userId.className = "id-tooltip"
     userId.innerText = user.id
     return userId;
   }
@@ -62,5 +73,40 @@ export class UsersSettings {
     const userName = document.createElement('span');
     userName.innerText = user.displayName
     return userName;
+  }
+
+  #update(user) {
+    let type = user.type;
+    Swal.fire({
+      title: `Update user`,
+      html: `
+            <form class='popup'>
+                <div class="server-structure-form-group">
+                    <label for="userType">Type</label>
+                    <select id='userType'>
+                        <option value='USER'>simple user</option>
+                        <option value='BOT'>bot</option>
+                        <option value='ADMIN'>admin</option>
+                    </select>
+                </div>
+            </form > `,
+      didOpen: () => {
+        document.getElementById('userType').value = user.type
+        document.getElementById('userType').oninput = () => { type = document.getElementById('userType').value };
+      },
+      animation: false,
+      customClass: SwalCustomClass,
+      showCancelButton: true,
+      confirmButtonText: "Update",
+      allowOutsideClick: false,
+    }).then(async (result) => {
+      if (result.value) {
+        await this.RVCA.fetcher.fetchCore(`/user/${user.id}`, 'PATCH', {
+          displayName: user.displayName,
+          type: type
+        });
+        this.load();
+      }
+    });
   }
 }

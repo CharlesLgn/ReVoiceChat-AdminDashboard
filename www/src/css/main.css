@@ -493,7 +493,7 @@ svg {
 .overview-dashboard {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
     row-gap: 2rem;
     column-gap: 2rem;
 }
@@ -510,7 +510,7 @@ svg {
 
 .card {
     width: 40%;
-    height: 30rem;
+    min-height: 10rem;
     background-color: #1a1a1e;
     padding: 10px;
     border-radius: 25px;
@@ -578,6 +578,12 @@ svg {
     margin-bottom: 1rem;
     font-weight: 800;
     font-size: 1.25rem;
+}
+
+.config h2 {
+    margin-bottom: 1rem;
+    font-weight: 700;
+    font-size: 1.1rem;
 }
 
 .config-right {
@@ -884,6 +890,14 @@ input[type=file]::file-selector-button {
     color: var(--pri-placeholder-color);
     text-wrap: nowrap;
 }
+.user-icon {
+    color: antiquewhite;
+    margin-right: 10px;
+}
+.user-icon svg {
+    width: 2.5rem;
+    height: 2.5rem;
+}
 
 .technical-list {
     padding: 5px;
@@ -899,4 +913,20 @@ input[type=file]::file-selector-button {
     border: var(--sec-bg-color) 1px solid;
     border-bottom: var(--sec-bg-color) 10px solid;
     border-radius: 5px;
+}
+
+.invitations-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.you {
+    background-color: var(--qua-bg-color);
+    border: var(--qua-bg-color) 2px solid;
+}
+
+.you:hover {
+    background-color: var(--qua-bg-color);
+    cursor: auto;
 }

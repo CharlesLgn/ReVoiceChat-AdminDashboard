@@ -4,6 +4,7 @@ import {LogoutComponent} from "./logout.js";
 import {UsersSettings} from "./users.settings.js";
 import {ServersSettings} from "./server.settings.js";
 import {TechnicalParametersSettings} from "./technical.parameters.settings.js";
+import {User} from "./user.js";
 
 class ReVoiceChatAdmin {
     #currentTab;
@@ -28,6 +29,7 @@ class ReVoiceChatAdmin {
         }
 
         this.fetcher = new Fetcher(this.#token, this.coreUrl, this.mediaUrl);
+        this.user = new User(this)
         this.invitationSettings = new InvitationSettings(this)
         this.logoutComponent = new LogoutComponent(this)
         this.usersSettings = new UsersSettings(this)
@@ -60,11 +62,13 @@ class ReVoiceChatAdmin {
     }
 
     #load() {
-        this.invitationSettings.load();
-        this.logoutComponent.load();
-        this.usersSettings.load();
-        this.serversSettings.load();
-        this.technicalParametersSettings.load();
+        this.user.load().then(() => {
+            this.invitationSettings.load();
+            this.logoutComponent.load();
+            this.usersSettings.load();
+            this.serversSettings.load();
+            this.technicalParametersSettings.load();
+        });
     }
 }
 
